@@ -1,4 +1,4 @@
-import { Schema, Types } from 'mongoose';
+import { Schema } from 'mongoose';
 import { ListValueSchema, IListValue } from './listValueSchema';
 
 export interface IParam extends Document {

@@ -1,41 +1,36 @@
-import { CreateParamDto } from "../dtos/createParamDto";
-import { UpdateParamDto } from "../dtos/updateParamDto";
-import { CreateParamListValueDto } from "../dtos/createParamListValueDto";
-import { IParam, ParamSchema } from "../schemas/paramSchema";
-import Param from "../models/param";
-import { Model } from "mongoose";
+import { ParamCreateDto } from "../dtos/Param/paramCreateDto";
+import { ParamUpdateDto } from "../dtos/Param/paramUpdateDto";
+import { Param } from "../models/param";
 
-const getParams = async () => {
+const getAll = async () => {
     const params = await Param.find();
     return params;
 }
 
-const getParam = async (paramId: string) => {
-    const param = await Param.findById(paramId);
+const getOne = async (id: string) => {
+    const param = await Param.findById(id);
     return param;
 };
 
-const createParam = async (data: CreateParamDto) => {
+const create = async (data: ParamCreateDto) => {
     const param = new Param(data);
     param.listValues = [];
     await param.save();
     return param;
 }
 
-const updateParam = async (paramId: string, data: UpdateParamDto) => {
-    return await Param.findByIdAndUpdate(paramId, data, {new: true});
+const update = async (id: string, data: ParamUpdateDto) => {
+    return await Param.findByIdAndUpdate(id, data, {new: true});
 }
 
-const createParamListValue = async (paramId: string, data: CreateParamListValueDto) => {
-    // const param: Document<IParam> = await Param.findById(paramId);
-    // param.
+const remove = async (id: string) => {
+    return await Param.findByIdAndDelete(id);
 }
 
-
-export default {
-    getParam,
-    getParams,
-    createParam,
-    updateParam,
-    createParamListValue
+export const ParamService = {
+    create,
+    update,
+    remove,
+    getAll,
+    getOne
 }

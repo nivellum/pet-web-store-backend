@@ -8,30 +8,65 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCategories = exports.createCategory = void 0;
-const categoryService_1 = __importDefault(require("../services/categoryService"));
-const createCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.CategoryController = void 0;
+const class_transformer_1 = require("class-transformer");
+const categoryService_1 = require("../services/categoryService");
+const categoryCreateDto_1 = require("../dtos/category/categoryCreateDto");
+const categoryUpdateDto_1 = require("../dtos/category/categoryUpdateDto");
+const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const data = req.body;
-        const category = categoryService_1.default.createCategory(data);
+        const data = (0, class_transformer_1.plainToInstance)(categoryCreateDto_1.CategoryCreateDto, req.body);
+        const category = yield categoryService_1.CategoryService.create(data);
         res.status(200).json(category);
     }
     catch (error) {
         res.status(400).json({ message: error.message });
     }
 });
-exports.createCategory = createCategory;
-const getCategories = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const update = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const categories = yield categoryService_1.default.getCategories();
+        const { categoryId } = req.params;
+        const data = (0, class_transformer_1.plainToInstance)(categoryUpdateDto_1.CategoryUpdateDto, req.body);
+        const category = yield categoryService_1.CategoryService.update(categoryId, data);
+        res.status(200).json(category);
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+const remove = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { categoryId } = req.params;
+        const category = yield categoryService_1.CategoryService.remove(categoryId);
+        res.status(200).json(category);
+    }
+    catch (_a) {
+    }
+});
+const getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const categories = yield categoryService_1.CategoryService.getAll();
         res.status(200).json(categories);
     }
     catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
-exports.getCategories = getCategories;
+const getOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { categoryId } = req.params;
+        const categories = yield categoryService_1.CategoryService.getOne(categoryId);
+        res.status(200).json(categories);
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+exports.CategoryController = {
+    create,
+    update,
+    remove,
+    getAll,
+    getOne
+};

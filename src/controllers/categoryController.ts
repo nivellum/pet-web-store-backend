@@ -1,35 +1,46 @@
-import { Request, Response, response } from 'express';
+import { Request, Response } from 'express';
 import { plainToInstance } from 'class-transformer';
-import CategoryService from '../services/categoryService';
-import { CreateCategoryDto } from '../dtos/createCategoryDto';
-import { UpdateCategoryDto } from '../dtos/updateCategoryDto';
+import { CategoryService } from '../services/categoryService';
+import { CategoryCreateDto } from '../dtos/category/categoryCreateDto';
+import { CategoryUpdateDto } from '../dtos/category/categoryUpdateDto';
 
-export const createCategory = async (req: Request, res: Response): Promise<void> => {
+const create = async (req: Request, res: Response): Promise<void> => {
     try {
-        const data: CreateCategoryDto = plainToInstance(CreateCategoryDto, <object>req.body);
-        const category = await CategoryService.createCategory(data);
+        const data: CategoryCreateDto = plainToInstance(CategoryCreateDto, <object>req.body);
+        const category = await CategoryService.create(data);
         res.status(200).json(category);
     } catch (error: any) {
         res.status(400).json({ message: error.message })
     }
 }
 
-export const updateCategory = async (req: Request, res: Response): Promise<void> => {
+const update = async (req: Request, res: Response): Promise<void> => {
     try {
 
         const { categoryId } = req.params;
 
-        const data: UpdateCategoryDto = plainToInstance(UpdateCategoryDto, <object>req.body);
-        const category = await CategoryService.updateCategory(categoryId, data);
+        const data: CategoryUpdateDto = plainToInstance(CategoryUpdateDto, <object>req.body);
+        const category = await CategoryService.update(categoryId, data);
         res.status(200).json(category);
     } catch (error: any) {
         res.status(400).json({ message: error.message })
     }
 }
 
-export const getCategories = async (req: Request, res: Response): Promise<void> => {
+const remove = async (req: Request, res: Response): Promise<void> => {
     try {
-        const categories = await CategoryService.getCategories();
+        const { categoryId } = req.params;
+
+        const category = await CategoryService.remove(categoryId);
+        res.status(200).json(category);
+    } catch {
+
+    }
+}
+
+const getAll = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const categories = await CategoryService.getAll();
         res.status(200).json(categories);
     } catch (error: any) {
         res.status(500).json({ message: error.message });
@@ -37,13 +48,21 @@ export const getCategories = async (req: Request, res: Response): Promise<void> 
 
 }
 
-export const getCategory = async (req: Request, res: Response): Promise<void> => {
+const getOne = async (req: Request, res: Response): Promise<void> => {
     try {
         const { categoryId } = req.params;
-        const categories = await CategoryService.getCategory(categoryId);
+        const categories = await CategoryService.getOne(categoryId);
         res.status(200).json(categories);
     } catch (error: any) {
         res.status(500).json({ message: error.message });
     }
-    
+
+}
+
+export const CategoryController = {
+    create,
+    update,
+    remove,
+    getAll,
+    getOne
 }

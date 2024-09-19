@@ -1,12 +1,15 @@
 import { Router } from "express";
-import validationMiddleware from "../middlewares/validationMiddleware";
-import {getParams, getParam, createParam, updateParam } from "../controllers/paramController";
-import { CreateParamDto } from "../dtos/createParamDto";
-import { create } from "domain";
-import { UpdateParamDto } from "../dtos/updateParamDto";
+import { ValidationMiddleware } from "../middlewares/validationMiddleware";
+import { ParamController } from "../controllers/paramController";
+import { ParamCreateDto } from "../dtos/Param/paramCreateDto";
+import { ParamUpdateDto } from "../dtos/Param/paramUpdateDto";
+
 const router: Router = Router();
 
-router.get('/params',  getParams);
-router.get('/params/:paramId',  getParam);
-router.post('/params/', validationMiddleware(CreateParamDto), createParam);
-router.put('/params/:paramId', validationMiddleware(UpdateParamDto), updateParam);
+router.get('/params', ParamController.getAll);
+router.get('/params/:paramId', ParamController.getOne);
+router.post('/params/', ValidationMiddleware(ParamCreateDto), ParamController.create);
+router.put('/params/:paramId', ValidationMiddleware(ParamUpdateDto), ParamController.update);
+router.delete('/params/:paramId', ParamController.remove);
+
+export default router;

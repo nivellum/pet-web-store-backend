@@ -1,4 +1,4 @@
 import mongoose from 'mongoose';
-import { ICategory, CategorySchema } from '../schemas/categorySchema';
+import { CategorySchema, ICategory } from '../schemas/categorySchema';
 
-export default mongoose.model<ICategory>("Category", CategorySchema);
+export const Category = mongoose.model<ICategory>("Category", CategorySchema);

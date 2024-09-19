@@ -1,31 +1,13 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const CategoryController = __importStar(require("../controllers/categoryController"));
+const categoryController_1 = require("../controllers/categoryController");
+const validationMiddleware_1 = require("../middlewares/validationMiddleware");
+const categoryCreateDto_1 = require("../dtos/category/categoryCreateDto");
+const categoryUpdateDto_1 = require("../dtos/category/categoryUpdateDto");
 const router = (0, express_1.Router)();
-router.post('/category', CategoryController.createCategory);
-router.get('/category', CategoryController.getCategories);
+router.get('/categories', categoryController_1.CategoryController.getAll);
+router.post('/categories/', (0, validationMiddleware_1.ValidationMiddleware)(categoryCreateDto_1.CategoryCreateDto), categoryController_1.CategoryController.create);
+router.put('/categories/:categoryId', (0, validationMiddleware_1.ValidationMiddleware)(categoryUpdateDto_1.CategoryUpdateDto), categoryController_1.CategoryController.update);
+router.delete('/categories/:categoryId', categoryController_1.CategoryController.remove);
 exports.default = router;

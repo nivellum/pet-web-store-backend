@@ -9,27 +9,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CategoryService = void 0;
-const category_1 = require("../models/category");
-const create = (categoryData) => __awaiter(void 0, void 0, void 0, function* () {
-    const category = new category_1.Category(categoryData);
-    yield category.save();
-    return category;
+exports.BaseCategoryService = void 0;
+const baseCategory_1 = require("../models/baseCategory");
+const create = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const baseCategory = new baseCategory_1.BaseCategory(data);
+    yield baseCategory.save();
+    return baseCategory;
 });
-const update = (categoryId, categoryData) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield category_1.Category.findByIdAndUpdate(categoryId, categoryData, { new: true });
+const update = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield baseCategory_1.BaseCategory.findByIdAndUpdate(data, data, { new: true });
 });
-const remove = (categoryId) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield category_1.Category.findByIdAndDelete(categoryId);
+const remove = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield baseCategory_1.BaseCategory.findByIdAndDelete(id);
 });
 const getAll = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield category_1.Category.find();
+    return yield baseCategory_1.BaseCategory.find();
 });
-const getOne = (categoryId) => __awaiter(void 0, void 0, void 0, function* () {
-    const category = yield category_1.Category.findById(categoryId);
+const getOne = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const category = yield baseCategory_1.BaseCategory.findById(id);
     return category;
 });
-exports.CategoryService = {
+exports.BaseCategoryService = {
     create,
     update,
     remove,

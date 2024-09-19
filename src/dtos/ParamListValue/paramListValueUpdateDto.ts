@@ -1,12 +1,12 @@
 import { IsNotEmpty, Length } from "class-validator";
-import 'reflect-metadata';
 
-export class UpdateCategoryDto {
+export class ParamListValueUpdateDto {
     @IsNotEmpty({message: "Name should not be empty"})
-    @Length(1,100, {message: "Name length should be between 1 and 100 characters"})
+    @Length(1, 100, {message: "Name length should be from 1 to 100"})
     name: string;
 
     constructor(name: string) {
         this.name = name;
     }
-}   
+}
+

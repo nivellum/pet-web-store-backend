@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const validationMiddleware_1 = require("../middlewares/validationMiddleware");
+const paramController_1 = require("../controllers/paramController");
+const paramCreateDto_1 = require("../dtos/Param/paramCreateDto");
+const paramUpdateDto_1 = require("../dtos/Param/paramUpdateDto");
+const router = (0, express_1.Router)();
+router.get('/params', paramController_1.ParamController.getAll);
+router.get('/params/:paramId', paramController_1.ParamController.getOne);
+router.post('/params/', (0, validationMiddleware_1.ValidationMiddleware)(paramCreateDto_1.ParamCreateDto), paramController_1.ParamController.create);
+router.put('/params/:paramId', (0, validationMiddleware_1.ValidationMiddleware)(paramUpdateDto_1.ParamUpdateDto), paramController_1.ParamController.update);
+router.delete('/params/:paramId', paramController_1.ParamController.remove);
+exports.default = router;

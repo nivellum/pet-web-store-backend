@@ -4,7 +4,7 @@ import 'reflect-metadata';
 
 const allowedTypes = ["list", "string"];
 
-export class CreateParamDto {
+export class ParamCreateDto {
     
 
     @IsNotEmpty({message: "CategoryId is required"})

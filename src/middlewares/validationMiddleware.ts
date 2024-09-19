@@ -3,7 +3,7 @@ import { validate } from 'class-validator';
 import { Request, Response, NextFunction } from 'express';
 
 
-const validationMiddleware = <T extends Object>(type: new (...args: any) => T) => function(req: Request, res: Response, next: NextFunction) {
+export const ValidationMiddleware = <T extends Object>(type: new (...args: any) => T) => function(req: Request, res: Response, next: NextFunction) {
 
     const dto: T = plainToInstance(type, <object>req.body);
 
@@ -17,5 +17,3 @@ const validationMiddleware = <T extends Object>(type: new (...args: any) => T) =
         next();
     });
 }
-
-export default validationMiddleware;

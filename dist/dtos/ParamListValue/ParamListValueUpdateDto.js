@@ -9,16 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CategoryDto = void 0;
+exports.ParamListValueUpdateDto = void 0;
 const class_validator_1 = require("class-validator");
-class CategoryDto {
+class ParamListValueUpdateDto {
     constructor(name) {
         this.name = name;
     }
 }
-exports.CategoryDto = CategoryDto;
+exports.ParamListValueUpdateDto = ParamListValueUpdateDto;
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: "Name should not be empty" }),
-    (0, class_validator_1.Length)(1, 40, { message: "Name length should be between 1 and 40 characters" }),
+    (0, class_validator_1.Length)(1, 100, { message: "Name length should be from 1 to 100" }),
     __metadata("design:type", String)
-], CategoryDto.prototype, "name", void 0);
+], ParamListValueUpdateDto.prototype, "name", void 0);

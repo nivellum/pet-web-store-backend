@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const baseCategoryController_1 = require("../controllers/baseCategoryController");
+const validationMiddleware_1 = require("../middlewares/validationMiddleware");
+const categoryCreateDto_1 = require("../dtos/category/categoryCreateDto");
+const categoryUpdateDto_1 = require("../dtos/category/categoryUpdateDto");
+// import { CreateCategoryParamDto } from "../dtos/createParamDto";
+// import { CreateCategoryParamListValueDto } from "../dtos/createParamListValueDto";
+// import { UpdateCategoryParamDto } from "../dtos/updateParamDto";
+const router = (0, express_1.Router)();
+router.get('/base-categories', baseCategoryController_1.BaseCategoryController.getAll);
+router.post('/base-categories/', (0, validationMiddleware_1.ValidationMiddleware)(categoryCreateDto_1.CategoryCreateDto), baseCategoryController_1.BaseCategoryController.create);
+router.put('/base-categories/:baseCategoryId', (0, validationMiddleware_1.ValidationMiddleware)(categoryUpdateDto_1.CategoryUpdateDto), baseCategoryController_1.BaseCategoryController.update);
+router.delete('/base-categories/:baseCategoryId', baseCategoryController_1.BaseCategoryController.remove);
+exports.default = router;

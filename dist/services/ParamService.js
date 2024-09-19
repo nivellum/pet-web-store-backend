@@ -9,27 +9,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CategoryService = void 0;
-const category_1 = require("../models/category");
-const create = (categoryData) => __awaiter(void 0, void 0, void 0, function* () {
-    const category = new category_1.Category(categoryData);
-    yield category.save();
-    return category;
-});
-const update = (categoryId, categoryData) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield category_1.Category.findByIdAndUpdate(categoryId, categoryData, { new: true });
-});
-const remove = (categoryId) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield category_1.Category.findByIdAndDelete(categoryId);
-});
+exports.ParamService = void 0;
+const param_1 = require("../models/param");
 const getAll = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield category_1.Category.find();
+    const params = yield param_1.Param.find();
+    return params;
 });
-const getOne = (categoryId) => __awaiter(void 0, void 0, void 0, function* () {
-    const category = yield category_1.Category.findById(categoryId);
-    return category;
+const getOne = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const param = yield param_1.Param.findById(id);
+    return param;
 });
-exports.CategoryService = {
+const create = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const param = new param_1.Param(data);
+    param.listValues = [];
+    yield param.save();
+    return param;
+});
+const update = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield param_1.Param.findByIdAndUpdate(id, data, { new: true });
+});
+const remove = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield param_1.Param.findByIdAndDelete(id);
+});
+exports.ParamService = {
     create,
     update,
     remove,

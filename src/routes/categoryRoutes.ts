@@ -1,16 +1,14 @@
 import { Router } from "express";
-import * as CategoryController from '../controllers/categoryController';
-import validationMiddleware from "../middlewares/validationMiddleware";
-import { CreateCategoryDto } from "../dtos/createCategoryDto";
-import { UpdateCategoryDto } from "../dtos/updateCategoryDto";
-// import { CreateCategoryParamDto } from "../dtos/createParamDto";
-// import { CreateCategoryParamListValueDto } from "../dtos/createParamListValueDto";
-// import { UpdateCategoryParamDto } from "../dtos/updateParamDto";
+import { CategoryController } from '../controllers/categoryController';
+import { ValidationMiddleware } from "../middlewares/validationMiddleware";
+import { CategoryCreateDto } from "../dtos/category/categoryCreateDto";
+import { CategoryUpdateDto } from "../dtos/category/categoryUpdateDto";
 
 const router: Router = Router();
 
-router.get('/categories', CategoryController.getCategories);
-router.post('/categories/', validationMiddleware(CreateCategoryDto), CategoryController.createCategory);
-router.put('/categories/:categoryId', validationMiddleware(UpdateCategoryDto), CategoryController.updateCategory);
+router.get('/categories', CategoryController.getAll);
+router.post('/categories/', ValidationMiddleware(CategoryCreateDto), CategoryController.create);
+router.put('/categories/:categoryId', ValidationMiddleware(CategoryUpdateDto), CategoryController.update);
+router.delete('/categories/:categoryId', CategoryController.remove);
 
 export default router;
