@@ -3,10 +3,18 @@ import { plainToInstance } from 'class-transformer';
 import { CategoryService } from '../services/categoryService';
 import { CategoryCreateDto } from '../dtos/category/categoryCreateDto';
 import { CategoryUpdateDto } from '../dtos/category/categoryUpdateDto';
+import { BaseCategory } from '../models/baseCategory';
+import { BaseCategoryService } from '../services/baseCategoryService';
+import { IBaseCategory } from '../schemas/baseCategorySchema';
 
 const create = async (req: Request, res: Response): Promise<void> => {
     try {
         const data: CategoryCreateDto = plainToInstance(CategoryCreateDto, <object>req.body);
+        const baseCategory = await BaseCategoryService.getOne(data.baseCategoryId);
+
+        if (baseCategory === null) {
+            throw new Error("Base category not found");
+        }
         const category = await CategoryService.create(data);
         res.status(200).json(category);
     } catch (error: any) {
@@ -21,6 +29,10 @@ const update = async (req: Request, res: Response): Promise<void> => {
 
         const data: CategoryUpdateDto = plainToInstance(CategoryUpdateDto, <object>req.body);
         const category = await CategoryService.update(categoryId, data);
+
+        if (category === null)
+            throw new Error("Category not found");
+
         res.status(200).json(category);
     } catch (error: any) {
         res.status(400).json({ message: error.message })
@@ -32,9 +44,13 @@ const remove = async (req: Request, res: Response): Promise<void> => {
         const { categoryId } = req.params;
 
         const category = await CategoryService.remove(categoryId);
-        res.status(200).json(category);
-    } catch {
 
+        if (category === null)
+            throw new Error("Category not found");
+
+        res.status(200).json(category);
+    } catch (error: any) {
+        res.status(400).json({ message: error.message });
     }
 }
 
@@ -43,7 +59,7 @@ const getAll = async (req: Request, res: Response): Promise<void> => {
         const categories = await CategoryService.getAll();
         res.status(200).json(categories);
     } catch (error: any) {
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 
 }
@@ -54,7 +70,7 @@ const getOne = async (req: Request, res: Response): Promise<void> => {
         const categories = await CategoryService.getOne(categoryId);
         res.status(200).json(categories);
     } catch (error: any) {
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 
 }

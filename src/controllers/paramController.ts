@@ -73,6 +73,9 @@ const remove = async (req: Request, res: Response): Promise<void> => {
         
         const param = await ParamService.remove(paramId);
 
+        if(param === null)
+            throw new Error("Param not found");
+
         res.status(200).json(param);
     } catch (error: any) {
         res.status(400).json({ message: error.message });
