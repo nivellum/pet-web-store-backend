@@ -56,7 +56,8 @@ const remove = async (req: Request, res: Response): Promise<void> => {
 
 const getAll = async (req: Request, res: Response): Promise<void> => {
     try {
-        const categories = await CategoryService.getAll();
+        const { baseCategoryId } = req.query;
+        const categories = await CategoryService.getAll(baseCategoryId as string);
         res.status(200).json(categories);
     } catch (error: any) {
         res.status(400).json({ message: error.message });

@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { CategoryCreateDto } from "../dtos/category/categoryCreateDto";
 import { CategoryUpdateDto } from "../dtos/category/categoryUpdateDto";
 import { Category } from "../models/category";
@@ -16,8 +17,12 @@ const remove = async (categoryId: string) => {
     return await Category.findByIdAndDelete(categoryId);
 }
 
-const getAll = async () => {
-    return await Category.find();
+const getAll = async (baseCategoryId?: string) => {
+    if (baseCategoryId) {
+        return await Category.find({ baseCategoryId: baseCategoryId }).exec();
+    }
+    else
+        return await Category.find();
 }
 
 const getOne = async (categoryId: string) => {

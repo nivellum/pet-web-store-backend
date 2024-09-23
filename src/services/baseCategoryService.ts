@@ -3,8 +3,7 @@ import { BaseCategoryCreateDto } from "../dtos/baseCategory/baseCategoryCreateDt
 import { BaseCategoryUpdateDto } from "../dtos/baseCategory/baseCategoryUpdateDto";
 
 const create = async (data: BaseCategoryCreateDto) => {
-    const baseCategory = new BaseCategory(data);
-    await baseCategory.save();
+    const baseCategory = BaseCategory.create(data);
     return baseCategory;
 }
 
