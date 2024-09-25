@@ -1,9 +1,12 @@
 import { BaseCategory } from "../models/baseCategory";
 import { BaseCategoryCreateDto } from "../dtos/baseCategory/baseCategoryCreateDto";
 import { BaseCategoryUpdateDto } from "../dtos/baseCategory/baseCategoryUpdateDto";
+import { Types } from "mongoose";
 
 const create = async (data: BaseCategoryCreateDto) => {
-    const baseCategory = BaseCategory.create(data);
+    const baseCategory = new BaseCategory(data);
+    baseCategory._id = new Types.ObjectId();
+    await baseCategory.save();
     return baseCategory;
 }
 

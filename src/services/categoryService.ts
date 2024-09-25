@@ -5,6 +5,7 @@ import { Category } from "../models/category";
 
 const create = async (categoryData: CategoryCreateDto) => {
     const category = new Category(categoryData);
+    category._id = new Types.ObjectId();
     await category.save();
     return category;
 }
